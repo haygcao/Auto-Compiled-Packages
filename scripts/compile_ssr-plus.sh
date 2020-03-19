@@ -12,7 +12,7 @@ curren_dir="$(pwd)"
 # Compile Check
 sudo -E apt-get -qq update
 sudo -E apt-get -qq install curl
-current_commit="$(curl -sL "https://raw.githubusercontent.com/project-openwrt/Auto-Compiled-Packages/ssr-plus/current_commit")"
+current_commit="$(curl -sL "https://raw.githubusercontent.com/project-openwrt/Auto-Compiled-Packages/ssr-plus/scripts/current_commit")"
 cloud_commit="$(curl -sL "https://github.com/coolsnowwolf/lede/commits/master/package/lean/luci-app-ssr-plus" |tr -d "\n" | grep -Eo "commit\/[0-9a-z]+" | sed -n "1p" | sed "s#commit/##g")"
 [ "${current_commit}" == "${cloud_commit}" ] && { echo -e "Commit is up-to-date."; exit 0; }
 
