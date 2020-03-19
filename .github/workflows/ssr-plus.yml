@@ -1,9 +1,9 @@
 name: Compile luci-app-ssr-plus PKG ONLY
 
 on:
-  push:
-    branches: 
-      - ssr-plus-pkg
+  #push:
+    #branches: 
+      #- ssr-plus-pkg
   schedule:
     - cron: 0 */3 * * * 
 

@@ -12,7 +12,7 @@ curren_dir="$(pwd)"
 # Compile Check
 sudo -E apt-get -qq update
 sudo -E apt-get -qq install curl subversion
-current_commit="$(curl -sL "https://raw.githubusercontent.com/project-openwrt/Auto-Compiled-Packages/ssr-plus/current_commit")"
+current_commit="$(curl -sL "https://raw.githubusercontent.com/project-openwrt/Auto-Compiled-Packages/ssr-plus-pkg/scripts/current_commit")"
 cloud_commit="$(curl -sL "https://github.com/coolsnowwolf/lede/commits/master/package/lean/luci-app-ssr-plus" |tr -d "\n" | grep -Eo "commit\/[0-9a-z]+" | sed -n "1p" | sed "s#commit/##g")"
 [ "${current_commit}" == "${cloud_commit}" ] && { echo -e "Commit is up-to-date."; exit 0; }
 
@@ -89,7 +89,7 @@ po2lmo/po2lmo "luci-app-ssr-plus_src/po/zh-cn/ssr-plus.po" "luci-app-ssr-plus/us
 
 # Compile Package
 git rm -f luci-app-ssr-plus_*_all.ipk
-sh <(curl -sL "https://raw.githubusercontent.com/openwrt/openwrt/master/scripts/ipkg-build") -o "root" -g "root" "${curren_dir}/luci-app-ssr-plus" "${curren_dir}"
+sh <(curl -sL "https://raw.githubusercontent.com/openwrt/openwrt/master/scripts/ipkg-build") -o "root" -g "root" "${curren_dir}/luci-app-ssr-plus" "${curren_dir}" || { echo -e "Failed to compile package."; exit 1; }
 
 mkdir -p "scripts"
 echo -e "${cloud_commit}" > "scripts/current_commit"
