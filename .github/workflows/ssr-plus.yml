@@ -1,0 +1,25 @@
+name: Compile luci-app-ssr-plus
+
+on:
+  #push:
+    #branches: 
+      #- ssr-plus
+  schedule:
+    - cron: 0 */3 * * * 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      with:
+        ref: 'ssr-plus'
+        fetch-depth: '1'
+
+    - name: Call Compile Script
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: /bin/bash scripts/compile_ssr-plus.sh
