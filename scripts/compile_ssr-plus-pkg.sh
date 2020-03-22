@@ -6,13 +6,13 @@
 
 ulimit -c unlimited
 
-curren_dir="$(pwd)"
+current_dir="$(pwd)"
 
 
 # Compile Check
 sudo -E apt-get -qq update
 sudo -E apt-get -qq install curl subversion
-current_commit="$(curl -sL "https://raw.githubusercontent.com/project-openwrt/Auto-Compiled-Packages/ssr-plus-pkg/scripts/current_commit")"
+current_commit="$(cat "scripts/current_commit")"
 cloud_commit="$(curl -sL "https://github.com/coolsnowwolf/lede/commits/master/package/lean/luci-app-ssr-plus" |tr -d "\n" | grep -Eo "commit\/[0-9a-z]+" | sed -n "1p" | sed "s#commit/##g")"
 [ "${current_commit}" == "${cloud_commit}" ] && { echo -e "Commit is up-to-date."; exit 0; }
 
@@ -43,7 +43,7 @@ pkg_release="$(curl -sL "https://raw.githubusercontent.com/coolsnowwolf/lede/mas
 
 cat <<-EOF > "luci-app-ssr-plus/CONTROL/control"
 Architecture: all
-Depends: libc, shadowsocksr-libev-alt, ipset, ip-full, iptables-mod-tproxy, dnsmasq-full, coreutils, coreutils-base64, pdnsd-alt, wget, lua, libuci-lua, microsocks, ipt2socks, dns2socks, shadowsocks-libev-ss-local, shadowsocksr-libev-ssr-local, shadowsocks-libev-ss-redir, simple-obfs, v2ray-plugin, v2ray, trojan, redsocks2, kcptun-client, shadowsocksr-libev-server
+Depends: libc, shadowsocksr-libev-alt, ipset, ip-full, iptables-mod-tproxy, dnsmasq-full, coreutils, coreutils-base64, pdnsd-alt, wget, lua, libuci-lua, microsocks, ipt2socks, dns2socks, shadowsocks-libev-ss-local, shadowsocksr-libev-ssr-local, shadowsocks-libev-ss-redir, simple-obfs, tcpping, v2ray-plugin, v2ray, trojan, redsocks2, kcptun-client, shadowsocksr-libev-server
 Description:  SS/SSR/V2Ray/Trojan LuCI interface
 Maintainer: lean <coolsnowwolf@gmail.com>
 Package: luci-app-ssr-plus
@@ -89,7 +89,7 @@ po2lmo/po2lmo "luci-app-ssr-plus_src/po/zh-cn/ssr-plus.po" "luci-app-ssr-plus/us
 
 # Compile Package
 git rm -f luci-app-ssr-plus_*_all.ipk
-sh <(curl -sL "https://raw.githubusercontent.com/openwrt/openwrt/master/scripts/ipkg-build") -o "root" -g "root" "${curren_dir}/luci-app-ssr-plus" "${curren_dir}" || { echo -e "Failed to compile package."; exit 1; }
+sh <(curl -sL "https://raw.githubusercontent.com/openwrt/openwrt/master/scripts/ipkg-build") -o "root" -g "root" "${current_dir}/luci-app-ssr-plus" "${current_dir}" || { echo -e "Failed to compile package."; exit 1; }
 
 mkdir -p "scripts"
 echo -e "${cloud_commit}" > "scripts/current_commit"
@@ -98,5 +98,5 @@ echo -e "${cloud_commit}" > "scripts/current_commit"
 git config user.name CN_SZTL
 git config user.email cnsztl@project-openwrt.eu.org
 git add "scripts" luci-app-ssr-plus_*_all.ipk
-git commit -m "Compile commit: coolsnowwolf/lede@$(cat "scripts/current_commit" | head -c 6)"
+git commit -m "Compile commit: coolsnowwolf/lede@${cloud_commit::6}"
 git push
