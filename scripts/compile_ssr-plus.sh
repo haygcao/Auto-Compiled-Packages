@@ -6,13 +6,13 @@
 
 ulimit -c unlimited
 
-curren_dir="$(pwd)"
+current_dir="$(pwd)"
 
 
 # Compile Check
 sudo -E apt-get -qq update
 sudo -E apt-get -qq install curl
-current_commit="$(curl -sL "https://raw.githubusercontent.com/project-openwrt/Auto-Compiled-Packages/ssr-plus/scripts/current_commit")"
+current_commit="$(cat "scripts/current_commit")"
 cloud_commit="$(curl -sL "https://github.com/coolsnowwolf/lede/commits/master/package/lean/luci-app-ssr-plus" |tr -d "\n" | grep -Eo "commit\/[0-9a-z]+" | sed -n "1p" | sed "s#commit/##g")"
 [ "${current_commit}" == "${cloud_commit}" ] && { echo -e "Commit is up-to-date."; exit 0; }
 
@@ -135,7 +135,7 @@ popd
 rm -rf "luci"; mkdir -p "luci"
 rm -rf "packages"; mkdir -p "packages"
 cp -fp openwrt-sdk-19.07.2-x86-64_gcc-7.5.0_musl.Linux-x86_64/bin/packages/x86_64/base/luci-app-ssr-plus* luci/
-cp -fp openwrt-sdk-19.07.2-x86-64_gcc-7.5.0_musl.Linux-x86_64/bin/packages/x86_64/base/{ipt2socks*,kcptun*,microsocks*,pdnsd-alt*,redsocks2*,shadowsocksr-libev*,simple-obfs*,v2ray*} packages/
+cp -fp openwrt-sdk-19.07.2-x86-64_gcc-7.5.0_musl.Linux-x86_64/bin/packages/x86_64/base/{ipt2socks*,kcptun*,microsocks*,pdnsd-alt*,redsocks2*,shadowsocksr-libev*,simple-obfs*,tcpping*,v2ray*} packages/
 cp -fp openwrt-sdk-19.07.2-x86-64_gcc-7.5.0_musl.Linux-x86_64/bin/packages/x86_64/packages/shadowsocks-libev* packages/
 
 mkdir -p "scripts"
@@ -146,5 +146,5 @@ echo -e "${cloud_commit}" > "scripts/current_commit"
 git config user.name CN_SZTL
 git config user.email cnsztl@project-openwrt.eu.org
 git add "scripts" "luci" "packages"
-git commit -m "Compile commit: coolsnowwolf/lede@$(cat "scripts/current_commit" | head -c 6)"
+git commit -m "Compile commit: coolsnowwolf/lede@${cloud_commit::6}"
 git push
