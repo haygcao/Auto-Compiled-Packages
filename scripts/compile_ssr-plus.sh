@@ -111,15 +111,12 @@ CONFIG_PACKAGE_boost-random=m
 CONFIG_PACKAGE_boost-system=m
 
 CONFIG_PACKAGE_luci-app-ssr-plus=m
-CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks=y
-CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Simple_obfs=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_plugin=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Redsocks2=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y
-CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_DNS2SOCKS=y
 EOF
 
 make defconfig 2>"/dev/null"
@@ -135,7 +132,7 @@ popd
 rm -rf "luci"; mkdir -p "luci"
 rm -rf "packages"; mkdir -p "packages"
 cp -fp openwrt-sdk-19.07.2-x86-64_gcc-7.5.0_musl.Linux-x86_64/bin/packages/x86_64/base/luci-app-ssr-plus* luci/
-cp -fp openwrt-sdk-19.07.2-x86-64_gcc-7.5.0_musl.Linux-x86_64/bin/packages/x86_64/base/{ipt2socks*,kcptun*,microsocks*,pdnsd-alt*,redsocks2*,shadowsocksr-libev*,simple-obfs*,tcpping*,v2ray*} packages/
+cp -fp openwrt-sdk-19.07.2-x86-64_gcc-7.5.0_musl.Linux-x86_64/bin/packages/x86_64/base/{ipt2socks*,kcptun*,microsocks*,pdnsd-alt*,proxychains*,redsocks2*,shadowsocksr-libev*,simple-obfs*,tcpping*,v2ray*} packages/
 cp -fp openwrt-sdk-19.07.2-x86-64_gcc-7.5.0_musl.Linux-x86_64/bin/packages/x86_64/packages/shadowsocks-libev* packages/
 
 mkdir -p "scripts"
