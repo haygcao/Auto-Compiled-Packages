@@ -43,7 +43,7 @@ pkg_release="$(curl -sL "https://raw.githubusercontent.com/coolsnowwolf/lede/mas
 
 cat <<-EOF > "luci-app-ssr-plus/CONTROL/control"
 Architecture: all
-Depends: libc, shadowsocksr-libev-alt, ipset, ip-full, iptables-mod-tproxy, dnsmasq-full, coreutils, coreutils-base64, pdnsd-alt, wget, lua, libuci-lua, microsocks, ipt2socks, dns2socks, shadowsocks-libev-ss-local, shadowsocksr-libev-ssr-local, shadowsocks-libev-ss-redir, simple-obfs, tcpping, v2ray-plugin, v2ray, trojan, redsocks2, kcptun-client, shadowsocksr-libev-server
+Depends: libc, shadowsocksr-libev-alt, ipset, ip-full, iptables-mod-tproxy, dnsmasq-full, coreutils, coreutils-base64, pdnsd-alt, wget, lua, libuci-lua, microsocks, ipt2socks, dns2socks, shadowsocks-libev-ss-local, shadowsocksr-libev-ssr-local, shadowsocks-libev-ss-redir, simple-obfs, proxychains-ng, tcpping, v2ray-plugin, v2ray, trojan, redsocks2, kcptun-client, shadowsocksr-libev-server
 Description:  SS/SSR/V2Ray/Trojan LuCI interface
 Maintainer: lean <coolsnowwolf@gmail.com>
 Package: luci-app-ssr-plus
